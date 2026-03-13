@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import ImagePlaceholder from '@/components/ImagePlaceholder';
+import ProductImageGallery from '@/components/ProductImageGallery';
 import { handmadeProducts, Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
@@ -32,19 +32,19 @@ function ProductCard({ product }: { product: Product }) {
     return (
         <div className="havaku-card" style={{ overflow: 'hidden' }}>
             {/* Image */}
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', background: '#FAF7F2' }}>
-                <ImagePlaceholder
-                    width={400} height={300}
-                    label={product.name}
-                    src={product.image}
+            <div style={{ position: 'relative', width: '100%', overflow: 'hidden', background: '#FAF7F2' }}>
+                <ProductImageGallery
+                    image={product.image}
+                    images={product.images}
                     alt={product.name}
+                    aspectRatio="4 / 3"
                 />
-                {/* Wishlist */}
+                {/* Wishlist — overlaid on top of gallery */}
                 <button
-                    onClick={() => toggle(product)}
+                    onClick={(e) => { e.stopPropagation(); toggle(product); }}
                     title={isWishlisted(product.id) ? 'Remove from wishlist' : 'Save to wishlist'}
                     style={{
-                        position: 'absolute', top: 10, right: 10,
+                        position: 'absolute', top: 10, right: 10, zIndex: 3,
                         background: 'rgba(255,253,249,0.9)', border: 'none', borderRadius: '50%',
                         width: 34, height: 34, cursor: 'pointer',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',

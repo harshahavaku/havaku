@@ -148,7 +148,7 @@ export default function CartPage() {
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                         <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.85rem', color: 'var(--taupe)' }}>Delivery</span>
-                                        <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.8rem', color: '#25a244', fontWeight: 600 }}>Free (COD)</span>
+                                        <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.8rem', color: '#25a244', fontWeight: 600 }}>Free delivery</span>
                                     </div>
                                     <div style={{ borderTop: '1px solid rgba(201,169,110,0.2)', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', marginBottom: '1.75rem' }}>
                                         <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem', fontWeight: 600, color: 'var(--soft-black)' }}>Total</span>
@@ -162,7 +162,7 @@ export default function CartPage() {
                                         Proceed to Checkout
                                     </Link>
                                     <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.72rem', color: 'var(--taupe)', textAlign: 'center', marginTop: '1rem', lineHeight: 1.6 }}>
-                                        Cash on Delivery available · Orders confirmed via WhatsApp
+                                        Orders confirmed via WhatsApp · Payment after confirmation
                                     </p>
                                 </div>
                             </div>

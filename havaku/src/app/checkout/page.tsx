@@ -48,7 +48,6 @@ export default function CheckoutPage() {
 ${orderLines}
 
 *Subtotal:* ₹${subtotal.toLocaleString('en-IN')}
-*Payment:* Cash on Delivery
 
 *Deliver to:*
 ${form.name}
@@ -93,7 +92,7 @@ ${form.address}, ${form.city} - ${form.pincode}
                             Thank you, {form.name.split(' ')[0]}!
                         </h1>
                         <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.88rem', color: 'var(--taupe)', lineHeight: 1.8, marginBottom: '0.5rem' }}>
-                            Your order has been sent to HAVAKU via WhatsApp. We'll confirm it within 2 hours (Mon–Sat 9AM–8PM).
+                            Your order request has been sent via WhatsApp. Our team will confirm your order and share payment details shortly. We ship once payment is received.
                         </p>
                         <div style={{ background: 'var(--warm-white)', border: '1px solid rgba(201,169,110,0.25)', borderRadius: '4px', padding: '1.25rem', margin: '1.5rem 0' }}>
                             <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.75rem', color: 'var(--taupe)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.35rem' }}>Order Reference</p>
@@ -166,18 +165,6 @@ ${form.address}, ${form.city} - ${form.pincode}
                                 </div>
                             </div>
 
-                            {/* Payment */}
-                            <div style={{ background: 'var(--warm-white)', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '4px', padding: '2rem', marginBottom: '1.5rem' }}>
-                                <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.3rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '1.25rem' }}>Payment Method</h2>
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', padding: '1rem', border: '1.5px solid var(--champagne-gold)', borderRadius: '4px', background: 'rgba(201,169,110,0.06)' }}>
-                                    <input type="radio" defaultChecked readOnly style={{ accentColor: 'var(--champagne-gold)' }} />
-                                    <div>
-                                        <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.88rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '0.2rem' }}>Cash on Delivery</p>
-                                        <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.75rem', color: 'var(--taupe)' }}>Pay when your order arrives. Free delivery.</p>
-                                    </div>
-                                </label>
-                            </div>
-
                             {/* Notes */}
                             <div style={{ background: 'var(--warm-white)', border: '1px solid rgba(201,169,110,0.2)', borderRadius: '4px', padding: '2rem', marginBottom: '2rem' }}>
                                 <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.3rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '1rem' }}>Special Instructions</h2>
@@ -190,6 +177,20 @@ ${form.address}, ${form.city} - ${form.pincode}
                                     rows={3}
                                     style={{ resize: 'vertical' }}
                                 />
+                            </div>
+
+                            {/* Trust note */}
+                            <div style={{
+                                borderLeft: '3px solid var(--champagne-gold)',
+                                paddingLeft: '1rem',
+                                marginBottom: '1.5rem',
+                                background: 'rgba(201,169,110,0.05)',
+                                borderRadius: '0 4px 4px 0',
+                                padding: '0.9rem 1rem',
+                            }}>
+                                <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.78rem', color: 'var(--taupe)', lineHeight: 1.75, margin: 0 }}>
+                                    <strong style={{ color: 'var(--soft-black)', fontWeight: 600 }}>How it works:</strong> After you tap &ldquo;Send Order via WhatsApp&rdquo;, our team will confirm your order and share payment details. We ship only after payment is received.
+                                </p>
                             </div>
 
                             <button

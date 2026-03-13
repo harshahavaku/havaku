@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import ImagePlaceholder from '@/components/ImagePlaceholder';
+import ProductImageGallery from '@/components/ProductImageGallery';
 import { jewelryProducts } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
@@ -84,19 +84,19 @@ export default function JewelryPage() {
                             {filteredProducts.map((product) => (
                                 <div key={product.id} className="havaku-card" style={{ overflow: 'hidden' }}>
                                     {/* Image */}
-                                    <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', background: '#FAF7F2' }}>
-                                        <ImagePlaceholder
-                                            width={220} height={220}
-                                            label={product.name}
-                                            src={product.image}
+                                    <div style={{ position: 'relative', width: '100%', overflow: 'hidden', background: '#FAF7F2' }}>
+                                        <ProductImageGallery
+                                            image={product.image}
+                                            images={product.images}
                                             alt={product.name}
+                                            aspectRatio="1 / 1"
                                         />
-                                        {/* Wishlist button */}
+                                        {/* Wishlist button — overlaid on top of gallery */}
                                         <button
-                                            onClick={() => toggle(product)}
+                                            onClick={(e) => { e.stopPropagation(); toggle(product); }}
                                             title={isWishlisted(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
                                             style={{
-                                                position: 'absolute', top: 10, right: 10,
+                                                position: 'absolute', top: 10, right: 10, zIndex: 3,
                                                 background: 'rgba(255,253,249,0.9)', border: 'none', borderRadius: '50%',
                                                 width: 34, height: 34, cursor: 'pointer',
                                                 display: 'flex', alignItems: 'center', justifyContent: 'center',

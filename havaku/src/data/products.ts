@@ -5,6 +5,7 @@ export type Product = {
     description: string;
     price: number; // INR — update these placeholder prices before going live
     image: string;
+    images?: string[];      // additional angle images for gallery (optional)
     variants?: string[];
     type: 'jewelry' | 'handmade';
 };
