@@ -1,16 +1,13 @@
+'use client';
+
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
-
-const products = [
-    { name: 'Handmade Luxury Soap', desc: 'Gentle, skin-loving soaps crafted from natural botanical ingredients. Free from harsh chemicals.', variants: 'Rose · Lavender · Turmeric · Charcoal · Sandalwood', image: '/images/handmade-soap-hero.png' },
-    { name: 'Glow Face Pack', desc: 'Brightening and nourishing face pack blends for radiant, even-toned skin. Ready to mix and apply.', variants: 'Multani · Turmeric · Rose Clay · Neem & Honey', image: '/images/handmade-facepack-hero.png' },
-    { name: 'Herbal Hair Oil', desc: 'Strengthen, nourish and condition hair with our time-tested herbal oil blend. For all hair types.', variants: 'Bhringraj · Coconut & Hibiscus · Amla & Brahmi', image: '/images/handmade-hairoil-hero.png' },
-    { name: 'Skincare Kit', desc: 'Curated skincare essentials in a beautiful kit — cleanser, face pack, moisturizer, and more.', variants: 'Glow Kit · Hydration Kit · Anti-aging Kit · Bridal Prep Kit', image: '/images/handmade-skincare-hero.png' },
-    { name: 'Luxury Gift Hamper', desc: 'Beautifully packaged gift hampers for birthdays, weddings, and festive occasions.', variants: 'Mini · Classic · Premium · Bridal', image: '/images/handmade-hamper-hero.png' },
-    { name: 'Bridal Beauty Kit', desc: 'Complete pre-bridal skincare kit designed for glowing skin from mehndi to reception.', variants: '15-Day Kit · 30-Day Kit', image: '/images/handmade-bridalkit-hero.png' },
-];
+import { handmadeProducts, Product } from '@/data/products';
+import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 
 const packagingFeatures = [
     { title: 'Ivory Gift Box', desc: 'Premium matte-finish ivory box with the HAVAKU logo embossed in gold foil.' },
@@ -20,7 +17,119 @@ const packagingFeatures = [
     { title: 'Handwritten Thank-You Card', desc: 'Every order includes a personalized thank-you card from HAVAKU.' },
 ];
 
+function ProductCard({ product }: { product: Product }) {
+    const { addToCart } = useCart();
+    const { toggle, isWishlisted } = useWishlist();
+    const [selectedVariant, setSelectedVariant] = useState<string | undefined>(product.variants?.[0]);
+    const [added, setAdded] = useState(false);
 
+    function handleAddToCart() {
+        addToCart(product, selectedVariant);
+        setAdded(true);
+        setTimeout(() => setAdded(false), 1500);
+    }
+
+    return (
+        <div className="havaku-card" style={{ overflow: 'hidden' }}>
+            {/* Image */}
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', background: '#FAF7F2' }}>
+                <ImagePlaceholder
+                    width={400} height={300}
+                    label={product.name}
+                    src={product.image}
+                    alt={product.name}
+                />
+                {/* Wishlist */}
+                <button
+                    onClick={() => toggle(product)}
+                    title={isWishlisted(product.id) ? 'Remove from wishlist' : 'Save to wishlist'}
+                    style={{
+                        position: 'absolute', top: 10, right: 10,
+                        background: 'rgba(255,253,249,0.9)', border: 'none', borderRadius: '50%',
+                        width: 34, height: 34, cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    }}
+                >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill={isWishlisted(product.id) ? 'var(--rose-gold)' : 'none'} stroke="var(--rose-gold)" strokeWidth="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                </button>
+            </div>
+            <div style={{ padding: '1.75rem' }}>
+                <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.35rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '0.5rem' }}>
+                    {product.name}
+                </h3>
+                <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.83rem', color: 'var(--taupe)', lineHeight: 1.8, marginBottom: '0.75rem' }}>
+                    {product.description}
+                </p>
+
+                {/* Variant selector */}
+                {product.variants && product.variants.length > 0 && (
+                    <div style={{ marginBottom: '1rem' }}>
+                        <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--taupe)', marginBottom: '0.5rem' }}>
+                            Variant
+                        </p>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                            {product.variants.map((v) => (
+                                <button
+                                    key={v}
+                                    onClick={() => setSelectedVariant(v)}
+                                    style={{
+                                        fontFamily: 'Manrope, sans-serif', fontSize: '0.72rem', fontWeight: 500,
+                                        padding: '0.3rem 0.75rem', borderRadius: '20px', cursor: 'pointer',
+                                        border: '1.5px solid',
+                                        borderColor: selectedVariant === v ? 'var(--champagne-gold)' : 'rgba(201,169,110,0.3)',
+                                        background: selectedVariant === v ? 'rgba(201,169,110,0.12)' : 'transparent',
+                                        color: selectedVariant === v ? 'var(--champagne-gold)' : 'var(--taupe)',
+                                        transition: 'all 0.2s ease',
+                                    }}
+                                >
+                                    {v}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.25rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '1rem' }}>
+                    ₹{product.price.toLocaleString('en-IN')}
+                </p>
+
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button
+                        onClick={handleAddToCart}
+                        className="btn-primary"
+                        style={{
+                            flex: 1, fontSize: '0.78rem', padding: '0.65rem 1rem',
+                            background: added ? '#25a244' : undefined,
+                            border: added ? '1.5px solid #25a244' : undefined,
+                            transition: 'all 0.25s ease',
+                        }}
+                    >
+                        {added ? '✓ Added to Cart' : 'Add to Cart'}
+                    </button>
+                    <a
+                        href={`https://wa.me/917386797648?text=Hi%20HAVAKU%2C%20I%20want%20to%20order%20${encodeURIComponent(product.name)}${selectedVariant ? `%20(${encodeURIComponent(selectedVariant)})` : ''}%20(₹${product.price}).`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Order via WhatsApp"
+                        style={{
+                            width: 40, height: 40, borderRadius: '2px', border: '1.5px solid rgba(37,211,102,0.5)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            color: '#25D366', textDecoration: 'none', flexShrink: 0,
+                        }}
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                            <path d="M11.998 0C5.372 0 0 5.373 0 12.001c0 2.117.554 4.102 1.523 5.83L.057 23.998l6.304-1.654A11.946 11.946 0 0011.998 24C18.626 24 24 18.627 24 12.001 24 5.373 18.626 0 11.998 0zm.002 21.818a9.815 9.815 0 01-5.012-1.367l-.36-.213-3.736.979.998-3.642-.235-.374A9.817 9.817 0 012.181 12c0-5.42 4.401-9.818 9.819-9.818 5.42 0 9.819 4.397 9.819 9.818s-4.399 9.818-9.819 9.818z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function HandmadePage() {
     return (
@@ -58,38 +167,8 @@ export default function HandmadePage() {
                             <div className="gold-divider" />
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.75rem' }}>
-                            {products.map((product) => (
-                                <div key={product.name} className="havaku-card" style={{ overflow: 'hidden' }}>
-                                    {/* Fixed image container */}
-                                    <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', background: '#FAF7F2' }}>
-                                        <ImagePlaceholder
-                                            width={400} height={300}
-                                            label={product.name}
-                                            src={product.image}
-                                            alt={product.name}
-                                        />
-                                    </div>
-                                    <div style={{ padding: '1.75rem' }}>
-                                        <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.35rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '0.6rem' }}>
-                                            {product.name}
-                                        </h3>
-                                        <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.83rem', color: 'var(--taupe)', lineHeight: 1.8, marginBottom: '0.75rem' }}>
-                                            {product.desc}
-                                        </p>
-                                        <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.75rem', color: 'var(--champagne-gold)', letterSpacing: '0.05em', marginBottom: '1.25rem' }}>
-                                            Variants: {product.variants}
-                                        </p>
-                                        <a
-                                            href="https://wa.me/917386797648"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="btn-primary"
-                                            style={{ fontSize: '0.78rem', padding: '0.65rem 1.5rem', display: 'inline-block' }}
-                                        >
-                                            Order via WhatsApp
-                                        </a>
-                                    </div>
-                                </div>
+                            {handmadeProducts.map((product) => (
+                                <ProductCard key={product.id} product={product} />
                             ))}
                         </div>
                     </div>
@@ -113,7 +192,6 @@ export default function HandmadePage() {
                                 <div key={feature.title} style={{
                                     background: 'rgba(255,253,249,0.05)', border: '1px solid rgba(201,169,110,0.2)',
                                     borderRadius: '4px', padding: '2rem 1.5rem', textAlign: 'center',
-                                    transition: 'background 0.3s ease',
                                 }}>
                                     <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(201,169,110,0.15)', border: '1px solid rgba(201,169,110,0.3)', margin: '0 auto 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         <span style={{ color: 'var(--champagne-gold)', fontSize: '1rem' }}>✦</span>

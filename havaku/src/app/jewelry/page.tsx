@@ -5,32 +5,27 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
+import { jewelryProducts } from '@/data/products';
+import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 
 const categories = ['All', 'Bridal Sets', 'Earrings', 'Bangles', 'Necklaces', 'Occasion'];
 
-const products = [
-    { name: 'Grand Bridal Set', category: 'Bridal Sets', note: 'Complete bridal jewelry including necklace, earrings & maang tikka', image: '/images/jewelry-grand-set.png' },
-    { name: 'Pearl Chandelier Earrings', category: 'Earrings', note: 'Elegant drop earrings with pearl accents', image: '/images/jewelry-pearl-earrings.png' },
-    { name: 'Kundan Bangle Set', category: 'Bangles', note: 'Intricate kundan work bangles — set of 6', image: '/images/jewelry-kundan-bangles.png' },
-    { name: 'Layered Gold Necklace', category: 'Necklaces', note: 'Multi-strand layered statement necklace', image: '/images/jewelry-layered-necklace.png' },
-    { name: 'Reception Jewelry Set', category: 'Bridal Sets', note: 'Glamorous set for reception evening wear', image: '/images/jewelry-reception-set.png' },
-    { name: 'Floral Drop Earrings', category: 'Earrings', note: 'Delicate flower petal design earrings', image: '/images/jewelry-floral-earrings.png' },
-    { name: 'Celebration Bangle Set', category: 'Bangles', note: 'Gold-tone bangles for festive occasions', image: '/images/jewelry-celebration-bangles.png' },
-    { name: 'Choker Necklace', category: 'Necklaces', note: 'Classic fitted choker with stone detailing', image: '/images/jewelry-choker-necklace.png' },
-    { name: 'Engagement Jewelry Set', category: 'Occasion', note: 'Elegant set for engagement ceremonies', image: '/images/jewelry-engagement-set.png' },
-    { name: 'Hoop Earrings with Stones', category: 'Earrings', note: 'Premium stone-set hoop earrings', image: '/images/jewelry-hoop-earrings.png' },
-    { name: 'Temple Jewelry Set', category: 'Bridal Sets', note: 'Traditional temple-design bridal set', image: '/images/jewelry-temple-set.png' },
-    { name: 'Anniversary Gift Set', category: 'Occasion', note: 'Curated jewelry set perfect for gifting', image: '/images/jewelry-anniversary-set.png' },
-];
-
-
-
 export default function JewelryPage() {
     const [activeCategory, setActiveCategory] = useState('All');
+    const [addedId, setAddedId] = useState<string | null>(null);
+    const { addToCart } = useCart();
+    const { toggle, isWishlisted } = useWishlist();
 
     const filteredProducts = activeCategory === 'All'
-        ? products
-        : products.filter(p => p.category === activeCategory);
+        ? jewelryProducts
+        : jewelryProducts.filter(p => p.category === activeCategory);
+
+    function handleAddToCart(product: typeof jewelryProducts[0]) {
+        addToCart(product);
+        setAddedId(product.id);
+        setTimeout(() => setAddedId(null), 1500);
+    }
 
     return (
         <>
@@ -87,8 +82,8 @@ export default function JewelryPage() {
 
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.5rem' }}>
                             {filteredProducts.map((product) => (
-                                <div key={product.name} className="havaku-card" style={{ overflow: 'hidden' }}>
-                                    {/* Fixed image container */}
+                                <div key={product.id} className="havaku-card" style={{ overflow: 'hidden' }}>
+                                    {/* Image */}
                                     <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', background: '#FAF7F2' }}>
                                         <ImagePlaceholder
                                             width={220} height={220}
@@ -96,36 +91,71 @@ export default function JewelryPage() {
                                             src={product.image}
                                             alt={product.name}
                                         />
+                                        {/* Wishlist button */}
+                                        <button
+                                            onClick={() => toggle(product)}
+                                            title={isWishlisted(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                                            style={{
+                                                position: 'absolute', top: 10, right: 10,
+                                                background: 'rgba(255,253,249,0.9)', border: 'none', borderRadius: '50%',
+                                                width: 34, height: 34, cursor: 'pointer',
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)', transition: 'transform 0.2s',
+                                            }}
+                                        >
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill={isWishlisted(product.id) ? 'var(--champagne-gold)' : 'none'} stroke="var(--champagne-gold)" strokeWidth="2">
+                                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                            </svg>
+                                        </button>
                                     </div>
                                     <div style={{ padding: '1.25rem' }}>
                                         <div style={{ marginBottom: '0.35rem' }}>
-                                            <span style={{
-                                                fontFamily: 'Manrope, sans-serif', fontSize: '0.7rem', fontWeight: 600,
-                                                letterSpacing: '0.1em', textTransform: 'uppercase',
-                                                color: 'var(--champagne-gold)',
-                                            }}>{product.category}</span>
+                                            <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--champagne-gold)' }}>
+                                                {product.category}
+                                            </span>
                                         </div>
                                         <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '0.4rem' }}>
                                             {product.name}
                                         </h3>
-                                        <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.78rem', color: 'var(--taupe)', lineHeight: 1.7, marginBottom: '1rem' }}>
-                                            {product.note}
+                                        <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.78rem', color: 'var(--taupe)', lineHeight: 1.7, marginBottom: '0.75rem' }}>
+                                            {product.description}
                                         </p>
-                                        <a
-                                            href="https://wa.me/917386797648"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            style={{
-                                                fontFamily: 'Manrope, sans-serif', fontSize: '0.75rem', fontWeight: 600,
-                                                letterSpacing: '0.08em', textTransform: 'uppercase',
-                                                color: 'var(--champagne-gold)', textDecoration: 'none',
-                                                border: '1.5px solid var(--champagne-gold)',
-                                                padding: '0.45rem 1rem', borderRadius: '2px',
-                                                display: 'inline-block', transition: 'all 0.25s ease',
-                                            }}
-                                        >
-                                            Inquire
-                                        </a>
+                                        <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.15rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '1rem' }}>
+                                            ₹{product.price.toLocaleString('en-IN')}
+                                        </p>
+                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                            <button
+                                                onClick={() => handleAddToCart(product)}
+                                                style={{
+                                                    flex: 1,
+                                                    fontFamily: 'Manrope, sans-serif', fontSize: '0.72rem', fontWeight: 600,
+                                                    letterSpacing: '0.08em', textTransform: 'uppercase',
+                                                    padding: '0.55rem 0.75rem', borderRadius: '2px', cursor: 'pointer',
+                                                    border: '1.5px solid var(--champagne-gold)',
+                                                    background: addedId === product.id ? 'var(--champagne-gold)' : 'transparent',
+                                                    color: addedId === product.id ? 'white' : 'var(--champagne-gold)',
+                                                    transition: 'all 0.25s ease',
+                                                }}
+                                            >
+                                                {addedId === product.id ? '✓ Added' : 'Add to Cart'}
+                                            </button>
+                                            <a
+                                                href={`https://wa.me/917386797648?text=Hi%20HAVAKU%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(product.name)}%20(₹${product.price}).`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                title="Enquire on WhatsApp"
+                                                style={{
+                                                    width: 34, height: 34, borderRadius: '2px', border: '1.5px solid rgba(37,211,102,0.5)',
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    color: '#25D366', textDecoration: 'none', flexShrink: 0,
+                                                }}
+                                            >
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                                    <path d="M11.998 0C5.372 0 0 5.373 0 12.001c0 2.117.554 4.102 1.523 5.83L.057 23.998l6.304-1.654A11.946 11.946 0 0011.998 24C18.626 24 24 18.627 24 12.001 24 5.373 18.626 0 11.998 0zm.002 21.818a9.815 9.815 0 01-5.012-1.367l-.36-.213-3.736.979.998-3.642-.235-.374A9.817 9.817 0 012.181 12c0-5.42 4.401-9.818 9.819-9.818 5.42 0 9.819 4.397 9.819 9.818s-4.399 9.818-9.819 9.818z" />
+                                                </svg>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
