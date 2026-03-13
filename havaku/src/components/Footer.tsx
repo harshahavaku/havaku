@@ -115,7 +115,7 @@ export default function Footer() {
                     {/* Quick Links */}
                     <div>
                         <h4 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--champagne-gold)', marginBottom: '1.25rem' }}>Quick Links</h4>
-                        {[['About Us', '/about'], ['Gallery', '/gallery'], ['Bridal Services', '/bridal'], ['Contact', '/contact'], ['Book Appointment', '/contact']].map(([label, href]) => (
+                        {[['About Us', '/about'], ['Gallery', '/gallery'], ['Bridal Services', '/bridal'], ['Contact', '/contact'], ['Book Appointment', '/book-appointment'], ['My Cart', '/cart'], ['My Wishlist', '/wishlist'], ['Track Order', '/order-tracking']].map(([label, href]) => (
                             <div key={label} style={{ marginBottom: '0.6rem' }}>
                                 <Link href={href} style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.84rem', color: 'rgba(250,247,242,0.65)', textDecoration: 'none', transition: 'color 0.2s' }}
                                     onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--champagne-gold)')}
