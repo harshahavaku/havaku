@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 type Props = {
     image: string;
@@ -19,24 +19,31 @@ export default function ProductImageGallery({ image, images, alt, aspectRatio = 
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const [cardHovered, setCardHovered] = useState(false);
 
+    // Refs to fix rapid-click bug: track target index and pending timeout
+    const targetRef = useRef(0);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
     /* ── smooth image swap ── */
     function goTo(index: number) {
-        if (index === current) return;
+        if (index === targetRef.current) return;
+        targetRef.current = index;
         setFading(true);
-        setTimeout(() => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
             setCurrent(index);
             setFading(false);
+            timeoutRef.current = null;
         }, 180);
     }
 
     function prev(e?: React.MouseEvent) {
         e?.stopPropagation();
-        goTo((current - 1 + allImages.length) % allImages.length);
+        goTo((targetRef.current - 1 + allImages.length) % allImages.length);
     }
 
     function next(e?: React.MouseEvent) {
         e?.stopPropagation();
-        goTo((current + 1) % allImages.length);
+        goTo((targetRef.current + 1) % allImages.length);
     }
 
     /* ── lightbox helpers ── */
@@ -83,6 +90,11 @@ export default function ProductImageGallery({ image, images, alt, aspectRatio = 
         }
         return () => { document.body.style.overflow = ''; };
     }, [lightboxOpen]);
+
+    /* ── cleanup timeout on unmount ── */
+    useEffect(() => {
+        return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+    }, []);
 
     /* ── shared arrow button style ── */
     function arrowStyle(size: number): React.CSSProperties {
@@ -136,7 +148,7 @@ export default function ProductImageGallery({ image, images, alt, aspectRatio = 
                     }}
                 />
 
-                {/* Left arrow */}
+                {/* Left arrow — always visible when multiple images */}
                 {hasMultiple && (
                     <button
                         onClick={prev}
@@ -144,14 +156,14 @@ export default function ProductImageGallery({ image, images, alt, aspectRatio = 
                         style={{
                             ...arrowStyle(32),
                             left: 8,
-                            opacity: cardHovered ? 1 : 0,
+                            opacity: 1,
                         }}
                     >
                         ‹
                     </button>
                 )}
 
-                {/* Right arrow */}
+                {/* Right arrow — always visible when multiple images */}
                 {hasMultiple && (
                     <button
                         onClick={next}
@@ -159,7 +171,7 @@ export default function ProductImageGallery({ image, images, alt, aspectRatio = 
                         style={{
                             ...arrowStyle(32),
                             right: 8,
-                            opacity: cardHovered ? 1 : 0,
+                            opacity: 1,
                         }}
                     >
                         ›
@@ -199,7 +211,7 @@ export default function ProductImageGallery({ image, images, alt, aspectRatio = 
                     </div>
                 )}
 
-                {/* Zoom hint icon — only on single image or when not hovered on multi */}
+                {/* Zoom hint icon */}
                 <div
                     style={{
                         position: 'absolute',

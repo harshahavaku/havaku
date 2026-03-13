@@ -18,6 +18,7 @@ export const jewelryProducts: Product[] = [
         description: 'Complete bridal jewelry including necklace, earrings & maang tikka',
         price: 4999,
         image: '/images/jewelry-grand-set.png',
+        images: ['/images/jewelry-grand-set.png', '/images/jewelry-bridal-set.jpg', '/images/bridal-look-1.png'],
         type: 'jewelry',
     },
     {
@@ -27,6 +28,7 @@ export const jewelryProducts: Product[] = [
         description: 'Elegant drop earrings with pearl accents',
         price: 799,
         image: '/images/jewelry-pearl-earrings.png',
+        images: ['/images/jewelry-pearl-earrings.png', '/images/jewelry-earrings.jpg'],
         type: 'jewelry',
     },
     {
@@ -36,6 +38,7 @@ export const jewelryProducts: Product[] = [
         description: 'Intricate kundan work bangles — set of 6',
         price: 1499,
         image: '/images/jewelry-kundan-bangles.png',
+        images: ['/images/jewelry-kundan-bangles.png', '/images/jewelry-bangles.jpg'],
         type: 'jewelry',
     },
     {
@@ -45,6 +48,7 @@ export const jewelryProducts: Product[] = [
         description: 'Multi-strand layered statement necklace',
         price: 1299,
         image: '/images/jewelry-layered-necklace.png',
+        images: ['/images/jewelry-layered-necklace.png', '/images/jewelry-necklace.jpg'],
         type: 'jewelry',
     },
     {
@@ -54,6 +58,7 @@ export const jewelryProducts: Product[] = [
         description: 'Glamorous set for reception evening wear',
         price: 3999,
         image: '/images/jewelry-reception-set.png',
+        images: ['/images/jewelry-reception-set.png', '/images/jewelry-bridal-set.jpg', '/images/bridal-look-2.png'],
         type: 'jewelry',
     },
     {
@@ -63,6 +68,7 @@ export const jewelryProducts: Product[] = [
         description: 'Delicate flower petal design earrings',
         price: 649,
         image: '/images/jewelry-floral-earrings.png',
+        images: ['/images/jewelry-floral-earrings.png', '/images/jewelry-earrings.jpg'],
         type: 'jewelry',
     },
     {
@@ -72,6 +78,7 @@ export const jewelryProducts: Product[] = [
         description: 'Gold-tone bangles for festive occasions',
         price: 1199,
         image: '/images/jewelry-celebration-bangles.png',
+        images: ['/images/jewelry-celebration-bangles.png', '/images/jewelry-bangles.jpg'],
         type: 'jewelry',
     },
     {
@@ -81,6 +88,7 @@ export const jewelryProducts: Product[] = [
         description: 'Classic fitted choker with stone detailing',
         price: 999,
         image: '/images/jewelry-choker-necklace.png',
+        images: ['/images/jewelry-choker-necklace.png', '/images/jewelry-choker.jpg'],
         type: 'jewelry',
     },
     {
@@ -90,6 +98,7 @@ export const jewelryProducts: Product[] = [
         description: 'Elegant set for engagement ceremonies',
         price: 3499,
         image: '/images/jewelry-engagement-set.png',
+        images: ['/images/jewelry-engagement-set.png', '/images/jewelry-occasion.jpg', '/images/bridal-look-3.png'],
         type: 'jewelry',
     },
     {
@@ -99,6 +108,7 @@ export const jewelryProducts: Product[] = [
         description: 'Premium stone-set hoop earrings',
         price: 549,
         image: '/images/jewelry-hoop-earrings.png',
+        images: ['/images/jewelry-hoop-earrings.png', '/images/jewelry-earrings.jpg'],
         type: 'jewelry',
     },
     {
@@ -108,6 +118,7 @@ export const jewelryProducts: Product[] = [
         description: 'Traditional temple-design bridal set',
         price: 4499,
         image: '/images/jewelry-temple-set.png',
+        images: ['/images/jewelry-temple-set.png', '/images/jewelry-bridal-set.jpg', '/images/bridal-look-4.png'],
         type: 'jewelry',
     },
     {
@@ -117,6 +128,7 @@ export const jewelryProducts: Product[] = [
         description: 'Curated jewelry set perfect for gifting',
         price: 2999,
         image: '/images/jewelry-anniversary-set.png',
+        images: ['/images/jewelry-anniversary-set.png', '/images/jewelry-occasion.jpg'],
         type: 'jewelry',
     },
 ];
@@ -129,6 +141,7 @@ export const handmadeProducts: Product[] = [
         description: 'Gentle, skin-loving soaps crafted from natural botanical ingredients. Free from harsh chemicals.',
         price: 299,
         image: '/images/handmade-soap-hero.png',
+        images: ['/images/handmade-soap-hero.png', '/images/gallery-1.png', '/images/gallery-2.png'],
         variants: ['Rose', 'Lavender', 'Turmeric', 'Charcoal', 'Sandalwood'],
         type: 'handmade',
     },
@@ -139,6 +152,7 @@ export const handmadeProducts: Product[] = [
         description: 'Brightening and nourishing face pack blends for radiant, even-toned skin.',
         price: 449,
         image: '/images/handmade-facepack-hero.png',
+        images: ['/images/handmade-facepack-hero.png', '/images/gallery-3.png', '/images/gallery-4.png'],
         variants: ['Multani', 'Turmeric', 'Rose Clay', 'Neem & Honey'],
         type: 'handmade',
     },
@@ -149,6 +163,7 @@ export const handmadeProducts: Product[] = [
         description: 'Strengthen, nourish and condition hair with our time-tested herbal oil blend.',
         price: 399,
         image: '/images/handmade-hairoil-hero.png',
+        images: ['/images/handmade-hairoil-hero.png', '/images/gallery-5.png', '/images/gallery-6.png'],
         variants: ['Bhringraj', 'Coconut & Hibiscus', 'Amla & Brahmi'],
         type: 'handmade',
     },
@@ -159,6 +174,7 @@ export const handmadeProducts: Product[] = [
         description: 'Curated skincare essentials in a beautiful kit — cleanser, face pack, moisturizer, and more.',
         price: 1299,
         image: '/images/handmade-skincare-hero.png',
+        images: ['/images/handmade-skincare-hero.png', '/images/gallery-7.png', '/images/gallery-8.png'],
         variants: ['Glow Kit', 'Hydration Kit', 'Anti-aging Kit', 'Bridal Prep Kit'],
         type: 'handmade',
     },
@@ -169,6 +185,7 @@ export const handmadeProducts: Product[] = [
         description: 'Beautifully packaged gift hampers for birthdays, weddings, and festive occasions.',
         price: 1999,
         image: '/images/handmade-hamper-hero.png',
+        images: ['/images/handmade-hamper-hero.png', '/images/gallery-9.png', '/images/gallery-10.png'],
         variants: ['Mini', 'Classic', 'Premium', 'Bridal'],
         type: 'handmade',
     },
@@ -179,6 +196,7 @@ export const handmadeProducts: Product[] = [
         description: 'Complete pre-bridal skincare kit designed for glowing skin from mehndi to reception.',
         price: 2499,
         image: '/images/handmade-bridalkit-hero.png',
+        images: ['/images/handmade-bridalkit-hero.png', '/images/gallery-11.png', '/images/gallery-12.png'],
         variants: ['15-Day Kit', '30-Day Kit'],
         type: 'handmade',
     },
