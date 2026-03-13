@@ -4,6 +4,8 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import Link from 'next/link';
 import BookingCtaBanner from '@/components/BookingCtaBanner';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import TestimonialsSection from '@/components/TestimonialsSection';
 
 const bridalPackages = [
     {
@@ -39,6 +41,25 @@ const faqs = [
     { q: 'What time should I schedule the bridal appointment?', a: 'For morning ceremonies, we typically start 3–4 hours before the event. We will coordinate timing based on your ceremony schedule during consultation.' },
     { q: 'Can I bring my own makeup products?', a: 'You are welcome to bring specific products you love, especially foundations matched to your skin tone. However, we use only premium quality products.' },
     { q: 'Do you travel to venues?', a: 'Yes, we offer on-location services for an additional travel fee. Contact us with your venue details for a custom quote.' },
+];
+
+const bridalTestimonials = [
+    {
+        id: 1,
+        name: 'Priya Sharma',
+        role: 'Bride',
+        rating: 5,
+        text: 'The team at HAVAKU made me feel like an absolute queen on my wedding day. The makeup lasted flawlessly through all the ceremonies and tears. Highly recommend their bridal package!',
+        image: '/images/bridal-look-1.png'
+    },
+    {
+        id: 2,
+        name: 'Aisha Patel',
+        role: 'Bride',
+        rating: 5,
+        text: 'I was so nervous about my reception look, but the artists understood exactly what I wanted. The bold, glamorous look they created was simply stunning. Best decision ever!',
+        image: '/images/bridal-look-6.png'
+    }
 ];
 
 
@@ -129,6 +150,23 @@ export default function BridalPage() {
                     </div>
                 </section>
 
+                {/* Before & After Transformations */}
+                <section style={{ padding: '6rem 2rem', background: 'var(--soft-black)' }}>
+                    <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+                        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                            <div className="section-label" style={{ marginBottom: '0.75rem', color: 'rgba(201,169,110,0.7)' }}>The Transformation</div>
+                            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 500, color: 'var(--warm-white)' }}>
+                                Before & After
+                            </h2>
+                            <div className="gold-divider" style={{ background: 'var(--champagne-gold)' }} />
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                            <BeforeAfterSlider beforeImage="/images/bridal-before-1.png" afterImage="/images/bridal-after-1.png" />
+                            <BeforeAfterSlider beforeImage="/images/bridal-before-2.png" afterImage="/images/bridal-after-2.png" />
+                        </div>
+                    </div>
+                </section>
+
                 {/* Gallery */}
                 <section style={{ padding: '5rem 2rem', background: 'var(--warm-white)' }}>
                     <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
@@ -141,7 +179,14 @@ export default function BridalPage() {
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1rem' }}>
                             {Array(6).fill(null).map((_, i) => (
-                                <ImagePlaceholder key={i} width={300} height={400} label={`Bridal Look ${i + 1}`} style={{ width: '100%', aspectRatio: '3/4', borderRadius: '4px' }} />
+                                <div key={i} style={{ position: 'relative', width: '100%', aspectRatio: '3 / 4', overflow: 'hidden', borderRadius: '4px', background: '#FAF7F2' }}>
+                                    <ImagePlaceholder
+                                        width={300} height={400}
+                                        label={`Bridal Look ${i + 1}`}
+                                        src={`/images/bridal-look-${i + 1}.png`}
+                                        alt={`HAVAKU Bridal Look ${i + 1}`}
+                                    />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -196,6 +241,14 @@ export default function BridalPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* Testimonials */}
+                <TestimonialsSection
+                    testimonials={bridalTestimonials}
+                    title="Love from our Brides"
+                    subtitle="Bridal Experiences"
+                    background="warm-white"
+                />
 
             </main>
             <BookingCtaBanner />

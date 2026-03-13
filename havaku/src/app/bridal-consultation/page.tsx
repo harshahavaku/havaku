@@ -77,13 +77,18 @@ export default function BridalConsultationPage() {
                     minHeight: 'calc(100vh - 72px)',
                 }}>
                     {/* Left — Image + heading */}
-                    <div style={{ position: 'relative', overflow: 'hidden' }}>
-                        <ImagePlaceholder
-                            width={800} height={900}
-                            label="Bridal Lifestyle"
-                            gradient="linear-gradient(160deg, #3A2D28 0%, var(--taupe) 50%, #C9A96E40 100%)"
-                            style={{ width: '100%', height: '100%', minHeight: '600px' }}
-                        />
+                    <div style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                        {/* Background image fills the panel */}
+                        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+                            <ImagePlaceholder
+                                width={1080} height={1920}
+                                label="Bridal Lifestyle"
+                                src="/images/bridal-lifestyle.png"
+                                alt="HAVAKU Bridal Lifestyle"
+                                gradient="linear-gradient(160deg, #3A2D28 0%, var(--taupe) 50%, #C9A96E40 100%)"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                            />
+                        </div>
                         {/* Overlay content */}
                         <div style={{
                             position: 'absolute', inset: 0,
@@ -119,7 +124,7 @@ export default function BridalConsultationPage() {
                                     Our bridal team will reach out to you within 24 hours to schedule your consultation. We can&apos;t wait to be part of your special day!
                                 </p>
                                 <a
-                                    href="https://wa.me/919999999999?text=Hi%20HAVAKU%2C%20I%20just%20submitted%20a%20bridal%20consultation%20request!"
+                                    href="https://wa.me/917386797648?text=Hi%20HAVAKU%2C%20I%20just%20submitted%20a%20bridal%20consultation%20request!"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{

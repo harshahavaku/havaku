@@ -90,17 +90,24 @@ export default function GalleryPage() {
                                         overflow: 'hidden',
                                     }}
                                 >
-                                    <ImagePlaceholder
-                                        width={300}
-                                        height={item.tall ? 340 : 220}
-                                        label={item.label}
-                                        gradient={`linear-gradient(135deg, ${palette[i % palette.length]}, ${palette[(i + 2) % palette.length]})`}
-                                        style={{
-                                            width: '100%',
-                                            height: item.tall ? 340 : 220,
-                                            borderRadius: '4px',
-                                        }}
-                                    />
+                                    {/* Fixed height image container */}
+                                    <div style={{
+                                        position: 'relative',
+                                        width: '100%',
+                                        height: item.tall ? 340 : 220,
+                                        overflow: 'hidden',
+                                        borderRadius: '4px',
+                                        background: '#FAF7F2',
+                                    }}>
+                                        <ImagePlaceholder
+                                            width={300}
+                                            height={item.tall ? 340 : 220}
+                                            label={item.label}
+                                            src={`/images/gallery-${item.id}.png`}
+                                            alt={item.label}
+                                            gradient={`linear-gradient(135deg, ${palette[i % palette.length]}, ${palette[(i + 2) % palette.length]})`}
+                                        />
+                                    </div>
                                 </div>
                             ))}
                         </div>

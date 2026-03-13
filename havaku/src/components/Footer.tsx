@@ -59,7 +59,7 @@ export default function Footer() {
                                 <Instagram size={16} />
                             </a>
                             <a
-                                href="https://wa.me/919999999999"
+                                href="https://wa.me/917386797648"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{
@@ -130,9 +130,17 @@ export default function Footer() {
                         <h4 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--champagne-gold)', marginBottom: '1.25rem' }}>Contact</h4>
                         <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.84rem', color: 'rgba(250,247,242,0.65)', lineHeight: 1.85 }}>
                             HAVAKU Beauty Studio<br />
-                            Your City, India<br />
-                            <a href="tel:+919999999999" style={{ color: 'var(--champagne-gold)', textDecoration: 'none' }}>+91 99999 99999</a><br />
-                            <a href="mailto:hello@havaku.com" style={{ color: 'var(--champagne-gold)', textDecoration: 'none' }}>hello@havaku.com</a>
+                            Hyderabad &amp; Andhra Pradesh<br />
+                            <br />
+                            <span style={{ fontSize: '0.75rem', color: 'rgba(250,247,242,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Hyderabad</span><br />
+                            Bhavani —&nbsp;
+                            <a href="tel:+917995950839" style={{ color: 'var(--champagne-gold)', textDecoration: 'none' }}>+91 79959 50839</a><br />
+                            <br />
+                            <span style={{ fontSize: '0.75rem', color: 'rgba(250,247,242,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Andhra Pradesh</span><br />
+                            Tanuja —&nbsp;
+                            <a href="tel:+917386797648" style={{ color: 'var(--champagne-gold)', textDecoration: 'none' }}>+91 73867 97648</a><br />
+                            <br />
+                            <a href="mailto:hellohavaku@gmail.com" style={{ color: 'var(--champagne-gold)', textDecoration: 'none' }}>hellohavaku@gmail.com</a>
                         </p>
                         <div style={{ marginTop: '1rem' }}>
                             <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.78rem', color: 'rgba(250,247,242,0.5)' }}>
@@ -145,7 +153,7 @@ export default function Footer() {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                     <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.78rem', color: 'rgba(250,247,242,0.4)' }}>
-                        © 2025 HAVAKU. All rights reserved.
+                        © 2026 HAVAKU. All rights reserved.
                     </p>
                     <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.78rem', color: 'rgba(250,247,242,0.4)' }}>
                         Crafted with love for every woman

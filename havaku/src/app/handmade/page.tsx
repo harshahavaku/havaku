@@ -4,12 +4,12 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 
 const products = [
-    { name: 'Handmade Luxury Soap', desc: 'Gentle, skin-loving soaps crafted from natural botanical ingredients. Free from harsh chemicals.', variants: 'Rose · Lavender · Turmeric · Charcoal · Sandalwood' },
-    { name: 'Glow Face Pack', desc: 'Brightening and nourishing face pack blends for radiant, even-toned skin. Ready to mix and apply.', variants: 'Multani · Turmeric · Rose Clay · Neem & Honey' },
-    { name: 'Herbal Hair Oil', desc: 'Strengthen, nourish and condition hair with our time-tested herbal oil blend. For all hair types.', variants: 'Bhringraj · Coconut & Hibiscus · Amla & Brahmi' },
-    { name: 'Skincare Kit', desc: 'Curated skincare essentials in a beautiful kit — cleanser, face pack, moisturizer, and more.', variants: 'Glow Kit · Hydration Kit · Anti-aging Kit · Bridal Prep Kit' },
-    { name: 'Luxury Gift Hamper', desc: 'Beautifully packaged gift hampers for birthdays, weddings, and festive occasions.', variants: 'Mini · Classic · Premium · Bridal' },
-    { name: 'Bridal Beauty Kit', desc: 'Complete pre-bridal skincare kit designed for glowing skin from mehndi to reception.', variants: '15-Day Kit · 30-Day Kit' },
+    { name: 'Handmade Luxury Soap', desc: 'Gentle, skin-loving soaps crafted from natural botanical ingredients. Free from harsh chemicals.', variants: 'Rose · Lavender · Turmeric · Charcoal · Sandalwood', image: '/images/handmade-soap-hero.png' },
+    { name: 'Glow Face Pack', desc: 'Brightening and nourishing face pack blends for radiant, even-toned skin. Ready to mix and apply.', variants: 'Multani · Turmeric · Rose Clay · Neem & Honey', image: '/images/handmade-facepack-hero.png' },
+    { name: 'Herbal Hair Oil', desc: 'Strengthen, nourish and condition hair with our time-tested herbal oil blend. For all hair types.', variants: 'Bhringraj · Coconut & Hibiscus · Amla & Brahmi', image: '/images/handmade-hairoil-hero.png' },
+    { name: 'Skincare Kit', desc: 'Curated skincare essentials in a beautiful kit — cleanser, face pack, moisturizer, and more.', variants: 'Glow Kit · Hydration Kit · Anti-aging Kit · Bridal Prep Kit', image: '/images/handmade-skincare-hero.png' },
+    { name: 'Luxury Gift Hamper', desc: 'Beautifully packaged gift hampers for birthdays, weddings, and festive occasions.', variants: 'Mini · Classic · Premium · Bridal', image: '/images/handmade-hamper-hero.png' },
+    { name: 'Bridal Beauty Kit', desc: 'Complete pre-bridal skincare kit designed for glowing skin from mehndi to reception.', variants: '15-Day Kit · 30-Day Kit', image: '/images/handmade-bridalkit-hero.png' },
 ];
 
 const packagingFeatures = [
@@ -59,8 +59,16 @@ export default function HandmadePage() {
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.75rem' }}>
                             {products.map((product) => (
-                                <div key={product.name} className="havaku-card" style={{ overflow: 'visible' }}>
-                                    <ImagePlaceholder width={400} height={300} label={product.name} style={{ width: '100%', aspectRatio: '4/3', borderRadius: '4px 4px 0 0' }} />
+                                <div key={product.name} className="havaku-card" style={{ overflow: 'hidden' }}>
+                                    {/* Fixed image container */}
+                                    <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', background: '#FAF7F2' }}>
+                                        <ImagePlaceholder
+                                            width={400} height={300}
+                                            label={product.name}
+                                            src={product.image}
+                                            alt={product.name}
+                                        />
+                                    </div>
                                     <div style={{ padding: '1.75rem' }}>
                                         <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.35rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '0.6rem' }}>
                                             {product.name}
@@ -72,7 +80,7 @@ export default function HandmadePage() {
                                             Variants: {product.variants}
                                         </p>
                                         <a
-                                            href="https://wa.me/919999999999"
+                                            href="https://wa.me/917386797648"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="btn-primary"
@@ -130,7 +138,7 @@ export default function HandmadePage() {
                     <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.9rem', color: 'rgba(26,26,26,0.7)', marginBottom: '2rem' }}>
                         Order via WhatsApp for fastest response and custom requests.
                     </p>
-                    <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer"
+                    <a href="https://wa.me/917386797648" target="_blank" rel="noopener noreferrer"
                         style={{ background: 'var(--soft-black)', color: 'var(--warm-white)', fontFamily: 'Manrope, sans-serif', fontWeight: 600, fontSize: '0.85rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0.9rem 2.5rem', borderRadius: '2px', textDecoration: 'none', display: 'inline-block' }}>
                         Order via WhatsApp
                     </a>

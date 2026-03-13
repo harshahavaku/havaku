@@ -5,6 +5,8 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import Link from 'next/link';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import InstagramFeed from '@/components/InstagramFeed';
 
 const services = [
   {
@@ -39,21 +41,21 @@ const beautyServices = [
 ];
 
 const jewelryItems = [
-  { name: 'Bridal Jewelry Sets', category: 'Bridal', price: 'Price on Request' },
-  { name: 'Statement Earrings', category: 'Earrings', price: 'Price on Request' },
-  { name: 'Gold-Tone Bangles', category: 'Bangles', price: 'Price on Request' },
-  { name: 'Layered Necklaces', category: 'Necklaces', price: 'Price on Request' },
-  { name: 'Occasion Jewelry Set', category: 'Occasion', price: 'Price on Request' },
-  { name: 'Bridal Choker Set', category: 'Bridal', price: 'Price on Request' },
+  { name: 'Bridal Jewelry Sets', category: 'Bridal', price: 'Price on Request', image: '/images/jewelry-grand-set.png' },
+  { name: 'Statement Earrings', category: 'Earrings', price: 'Price on Request', image: '/images/jewelry-pearl-earrings.png' },
+  { name: 'Gold-Tone Bangles', category: 'Bangles', price: 'Price on Request', image: '/images/jewelry-kundan-bangles.png' },
+  { name: 'Layered Necklaces', category: 'Necklaces', price: 'Price on Request', image: '/images/jewelry-layered-necklace.png' },
+  { name: 'Occasion Jewelry Set', category: 'Occasion', price: 'Price on Request', image: '/images/jewelry-engagement-set.png' },
+  { name: 'Bridal Choker Set', category: 'Bridal', price: 'Price on Request', image: '/images/jewelry-choker-necklace.png' },
 ];
 
 const handmadeItems = [
-  { name: 'Handmade Luxury Soaps', desc: 'Gentle, skin-loving soaps crafted from natural ingredients.' },
-  { name: 'Glow Face Packs', desc: 'Brightening and nourishing face pack blends for radiant skin.' },
-  { name: 'Herbal Hair Oils', desc: 'Strengthen and condition with our nourishing herbal oil blend.' },
-  { name: 'Skincare Kits', desc: 'Curated skincare essentials for every skin type.' },
-  { name: 'Gift Hampers', desc: 'Beautifully packaged luxury gift hampers for every occasion.' },
-  { name: 'Bridal Beauty Kit', desc: 'Complete pre-bridal skincare kit for your special days.' },
+  { name: 'Handmade Luxury Soaps', desc: 'Gentle, skin-loving soaps crafted from natural ingredients.', image: '/images/handmade-soap-hero.png' },
+  { name: 'Glow Face Packs', desc: 'Brightening and nourishing face pack blends for radiant skin.', image: '/images/handmade-facepack-hero.png' },
+  { name: 'Herbal Hair Oils', desc: 'Strengthen and condition with our nourishing herbal oil blend.', image: '/images/handmade-hairoil-hero.png' },
+  { name: 'Skincare Kits', desc: 'Curated skincare essentials for every skin type.', image: '/images/handmade-skincare-hero.png' },
+  { name: 'Gift Hampers', desc: 'Beautifully packaged luxury gift hampers for every occasion.', image: '/images/handmade-hamper-hero.png' },
+  { name: 'Bridal Beauty Kit', desc: 'Complete pre-bridal skincare kit for your special days.', image: '/images/handmade-bridalkit-hero.png' },
 ];
 
 const testimonials = [
@@ -61,16 +63,19 @@ const testimonials = [
     quote: 'HAVAKU transformed me completely for my wedding day. The team understood exactly what I envisioned and exceeded every expectation. I felt like royalty!',
     name: 'Priya Sharma',
     service: 'Bridal Makeup',
+    image: '/images/bridal-look-1.png',
   },
   {
     quote: 'The handmade skincare products are absolutely incredible. My skin has never felt this good. The gift hampers are so beautifully packaged too!',
     name: 'Anjali Mehta',
     service: 'Handmade Products',
+    image: '/images/bridal-look-4.png',
   },
   {
     quote: 'The bridal jewelry collection is stunning. I found the perfect set for my reception and it was exactly the elegance I was looking for.',
     name: 'Shreya Kapoor',
     service: 'Bridal Jewelry',
+    image: '/images/bridal-look-5.png',
   },
 ];
 
@@ -178,7 +183,7 @@ export default function HomePage() {
             </div>
             <div>
               <ImagePlaceholder
-                src="/images/about-studio.jpg"
+                src="/images/about-studio.png"
                 alt="HAVAKU Beauty Studio"
                 width={600} height={600}
                 style={{ width: '100%', aspectRatio: '1', borderRadius: '4px' }}
@@ -372,12 +377,15 @@ export default function HomePage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
               {jewelryItems.map((item) => (
-                <div key={item.name} className="havaku-card">
-                  <ImagePlaceholder
-                    width={200} height={200}
-                    label={item.category}
-                    style={{ width: '100%', aspectRatio: '1' }}
-                  />
+                <div key={item.name} className="havaku-card" style={{ overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', background: '#FAF7F2' }}>
+                    <ImagePlaceholder
+                      width={200} height={200}
+                      label={item.category}
+                      src={item.image}
+                      alt={item.name}
+                    />
+                  </div>
                   <div style={{ padding: '1.25rem' }}>
                     <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.05rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '0.35rem' }}>
                       {item.name}
@@ -405,8 +413,15 @@ export default function HomePage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
               {handmadeItems.map((item) => (
-                <div key={item.name} className="havaku-card">
-                  <ImagePlaceholder width={200} height={200} label={item.name} style={{ width: '100%', aspectRatio: '1' }} />
+                <div key={item.name} className="havaku-card" style={{ overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden', background: '#FAF7F2' }}>
+                    <ImagePlaceholder
+                      width={200} height={200}
+                      label={item.name}
+                      src={item.image}
+                      alt={item.name}
+                    />
+                  </div>
                   <div style={{ padding: '1.25rem' }}>
                     <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.05rem', fontWeight: 600, color: 'var(--soft-black)', marginBottom: '0.35rem' }}>
                       {item.name}
@@ -456,62 +471,20 @@ export default function HomePage() {
         </section>
 
         {/* ── SECTION 9: TESTIMONIALS ── */}
-        <section style={{ padding: '6rem 2rem', background: 'var(--blush-pink)' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <div className="section-label" style={{ marginBottom: '0.75rem', color: 'var(--rose-gold)' }}>Client Stories</div>
-              <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 500, color: 'var(--soft-black)' }}>
-                What Our Clients Say
-              </h2>
-              <div style={{ width: 50, height: 1.5, background: 'var(--rose-gold)', margin: '1rem auto 0' }} />
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.75rem' }}>
-              {testimonials.map((t) => (
-                <div
-                  key={t.name}
-                  style={{
-                    background: 'rgba(255,253,249,0.85)',
-                    borderRadius: '4px',
-                    padding: '2.5rem 2rem',
-                    boxShadow: '0 2px 20px rgba(26,26,26,0.06)',
-                    backdropFilter: 'blur(8px)',
-                    transition: 'transform 0.3s ease',
-                    position: 'relative',
-                  }}
-                >
-                  <div style={{
-                    fontFamily: 'Cormorant Garamond, serif',
-                    fontSize: '3.5rem',
-                    color: 'var(--champagne-gold)',
-                    lineHeight: 0.5,
-                    marginBottom: '1.5rem',
-                    opacity: 0.6,
-                  }}>
-                    "
-                  </div>
-                  <p style={{
-                    fontFamily: 'Manrope, sans-serif',
-                    fontSize: '0.88rem',
-                    color: 'var(--taupe)',
-                    lineHeight: 1.9,
-                    fontStyle: 'italic',
-                    marginBottom: '1.5rem',
-                  }}>
-                    {t.quote}
-                  </p>
-                  <div style={{ borderTop: '1px solid rgba(201,169,110,0.2)', paddingTop: '1rem' }}>
-                    <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.05rem', fontWeight: 600, color: 'var(--soft-black)' }}>
-                      {t.name}
-                    </p>
-                    <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '0.75rem', color: 'var(--champagne-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '0.2rem' }}>
-                      {t.service}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <TestimonialsSection
+          testimonials={testimonials.map((t, idx) => ({
+            id: idx,
+            name: t.name,
+            role: t.service,
+            text: t.quote,
+            rating: 5,
+            image: t.image
+          }))}
+          background="blush-pink"
+        />
+
+        {/* ── INSTAGRAM WIDGET ── */}
+        <InstagramFeed />
 
         {/* ── SECTION 10: FINAL CTA ── */}
         <section
@@ -557,7 +530,7 @@ export default function HomePage() {
               Available for bridal bookings, parlour appointments, and product inquiries.
             </p>
             <a
-              href="https://wa.me/919999999999?text=Hi%20HAVAKU%2C%20I%27d%20like%20to%20book%20an%20appointment!"
+              href="https://wa.me/917386797648?text=Hi%20HAVAKU%2C%20I%27d%20like%20to%20book%20an%20appointment!"
               target="_blank"
               rel="noopener noreferrer"
               style={{

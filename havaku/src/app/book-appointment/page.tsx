@@ -386,7 +386,7 @@ export default function BookAppointmentPage() {
                             </p>
                             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                                 <a
-                                    href={`https://wa.me/919999999999?text=Hi%20HAVAKU%2C%20I%20just%20booked%20a%20${encodeURIComponent(selectedService)}%20appointment%20for%20${encodeURIComponent(`${MONTHS[calMonth]} ${selectedDate}`)}%20at%20${encodeURIComponent(selectedTime)}.%20My%20name%20is%20${encodeURIComponent(form.name)}.`}
+                                    href={`https://wa.me/917386797648?text=Hi%20HAVAKU%2C%20I%20just%20booked%20a%20${encodeURIComponent(selectedService)}%20appointment%20for%20${encodeURIComponent(`${MONTHS[calMonth]} ${selectedDate}`)}%20at%20${encodeURIComponent(selectedTime)}.%20My%20name%20is%20${encodeURIComponent(form.name)}.`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{

@@ -134,7 +134,7 @@ export default function WhatsAppButton() {
                     </div>
                 )}
                 <a
-                    href="https://wa.me/919999999999?text=Hi%20HAVAKU%2C%20I%27d%20like%20to%20book%20an%20appointment."
+                    href="https://wa.me/917386797648?text=Hi%20HAVAKU%2C%20I%27d%20like%20to%20book%20an%20appointment."
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Chat on WhatsApp"

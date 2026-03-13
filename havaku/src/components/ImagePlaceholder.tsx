@@ -1,153 +1,120 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 
 interface ImagePlaceholderProps {
-    /** Width in pixels (used for display label and optional fixed sizing) */
-    width?: number;
-    /** Height in pixels (used for display label and optional fixed sizing) */
-    height?: number;
-    /** Optional label describing what this image should be (e.g. "Bridal Portrait") */
-    label?: string;
-    /** Custom inline styles — use for aspectRatio, borderRadius, etc. */
-    style?: React.CSSProperties;
-    children?: React.ReactNode;
-    /** Optional image src — when provided, renders an <img> instead of a placeholder */
     src?: string;
-    /** Alt text for the image, used when src is provided */
     alt?: string;
-    /** Optional custom gradient background */
+    width?: number;
+    height?: number;
+    label?: string;
+    /** Extra classes applied to the img or placeholder div (e.g. rounded-*, ring-*) */
+    className?: string;
+    /** Inline styles passed through — use for borderRadius when Tailwind isn't enough */
+    style?: React.CSSProperties;
+    /** @deprecated – use the wrapping div's aspect-ratio instead */
     gradient?: string;
+    children?: React.ReactNode;
 }
 
 /**
- * ImagePlaceholder
+ * ImagePlaceholder — drop-in image with safe fallback
  * ─────────────────────────────────────────────────────────────────────────────
- * Shows a styled gradient box with the expected image dimensions clearly
- * displayed. When you're ready to add a real photo, pass `src` and `alt` props
- * and the placeholder automatically becomes an <img> element.
+ * ALWAYS wrap this component in a sized container, e.g.:
+ *   <div className="relative w-full aspect-square overflow-hidden bg-[#FAF7F2]">
+ *     <ImagePlaceholder src="/images/file.jpg" alt="..." />
+ *   </div>
  *
- * All images should be placed in:  /public/images/   (see README.md there)
- * Reference them as:               <ImagePlaceholder src="/images/filename.jpg" ... />
- *
- * Example:
- *   <ImagePlaceholder width={600} height={600} label="Studio photo" style={{ borderRadius: 4 }} />
- *   <ImagePlaceholder src="/images/about-studio.jpg" alt="HAVAKU Studio" width={600} height={600} style={{ borderRadius: 4 }} />
+ * • src exists & loads  → fills 100% of the parent with object-cover
+ * • src missing / 404   → blush-gold gradient placeholder with camera icon + dimensions
  */
 export default function ImagePlaceholder({
+    src,
+    alt,
     width,
     height,
     label,
+    className = '',
     style,
+    gradient,
     children,
-    src,
-    alt = '',
-    gradient = 'linear-gradient(135deg, #F2D6CF 0%, #E8D5A8 100%)',
 }: ImagePlaceholderProps) {
-    // If a real image src is provided, render it properly
-    if (src) {
+    const [imgError, setImgError] = useState(false);
+
+    // Support auto-resolving extensions
+    const extensions = ['.webp', '.jpg', '.png', '.jpeg', '.gif', '.avif'];
+    const [extIndex, setExtIndex] = useState(0);
+
+    // If src contains a known extension and we're at index 0, start checking.
+    // We strip the extension to try others if the primary one fails.
+    const baseSrc = src ? src.replace(/\.(jpg|jpeg|png|gif|webp|avif)$/i, '') : '';
+    const currentSrc = src && extIndex === 0 ? src : (baseSrc ? `${baseSrc}${extensions[extIndex]}` : undefined);
+
+    const handleError = () => {
+        if (baseSrc && extIndex < extensions.length - 1) {
+            setExtIndex(prev => prev + 1);
+        } else {
+            setImgError(true);
+        }
+    };
+
+    if (currentSrc && !imgError) {
         return (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-                src={src}
-                alt={alt}
+                src={currentSrc}
+                alt={alt || label || 'HAVAKU'}
                 width={width}
                 height={height}
-                style={{
-                    display: 'block',
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    ...style,
-                }}
+                onError={handleError}
+                className={`w-full h-full object-cover object-center transition-transform duration-500 ${className}`}
+                style={style}
             />
         );
     }
 
-    const dimensionLabel = width && height ? `${width} × ${height} px` : null;
+    // ── Placeholder (no src or 404) ──────────────────────────────────────────
+    const bg = gradient ?? 'linear-gradient(135deg, #F2D6CF 0%, rgba(201,169,110,0.35) 100%)';
 
     return (
         <div
-            style={{
-                background: gradient,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-                ...style,
-            }}
+            className={`w-full h-full flex flex-col items-center justify-center relative overflow-hidden ${className}`}
+            style={{ background: bg, ...style }}
         >
-            {/* Subtle crosshatch pattern to indicate "image goes here" */}
-            <svg
-                aria-hidden="true"
-                style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: 0.06,
-                }}
-            >
+            {/* Subtle crosshatch */}
+            <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-[0.06]">
                 <defs>
-                    <pattern id="crosshatch" width="16" height="16" patternUnits="userSpaceOnUse">
+                    <pattern id="xhatch" width="16" height="16" patternUnits="userSpaceOnUse">
                         <path d="M0 0 L16 16 M16 0 L0 16" stroke="#7D6B5E" strokeWidth="0.75" fill="none" />
                     </pattern>
                 </defs>
-                <rect width="100%" height="100%" fill="url(#crosshatch)" />
+                <rect width="100%" height="100%" fill="url(#xhatch)" />
             </svg>
 
             {/* Camera icon */}
             <svg
                 aria-hidden="true"
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
+                className="w-8 h-8 mb-2 relative z-10"
                 fill="none"
                 stroke="#C9A96E"
                 strokeWidth="1.4"
-                style={{ opacity: 0.55, marginBottom: '0.5rem', position: 'relative', zIndex: 1 }}
+                viewBox="0 0 24 24"
+                style={{ opacity: 0.55 }}
             >
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                 <circle cx="12" cy="13" r="4" />
             </svg>
 
-            {/* Dimension label */}
-            {dimensionLabel && (
-                <span
-                    style={{
-                        fontFamily: 'Manrope, sans-serif',
-                        fontSize: '0.68rem',
-                        fontWeight: 600,
-                        letterSpacing: '0.08em',
-                        color: '#C9A96E',
-                        opacity: 0.8,
-                        position: 'relative',
-                        zIndex: 1,
-                    }}
-                >
-                    {dimensionLabel}
+            {width && height && (
+                <span className="relative z-10 text-[0.65rem] font-semibold tracking-widest text-[#C9A96E] opacity-80" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    {width} × {height} px
                 </span>
             )}
-
-            {/* Optional descriptive label */}
             {label && (
-                <span
-                    style={{
-                        fontFamily: 'Cormorant Garamond, serif',
-                        fontSize: '0.82rem',
-                        fontStyle: 'italic',
-                        color: '#7D6B5E',
-                        opacity: 0.65,
-                        marginTop: '0.25rem',
-                        position: 'relative',
-                        zIndex: 1,
-                    }}
-                >
+                <span className="relative z-10 text-[0.75rem] italic text-[#7D6B5E] opacity-65 mt-0.5" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
                     {label}
                 </span>
             )}
-
-            {/* Optional children (e.g. overlaid category badges) */}
             {children}
         </div>
     );
